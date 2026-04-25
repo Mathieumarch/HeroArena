@@ -1,0 +1,147 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Bouton principal violet -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Background"      Value="{StaticResource PurpleBrush}"/>
+        <Setter Property="Foreground"      Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="FontSize"        Value="14"/>
+        <Setter Property="FontWeight"      Value="SemiBold"/>
+        <Setter Property="Padding"         Value="20,10"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor"          Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource PurpleDarkBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Bouton or (spells) -->
+    <Style x:Key="SpellButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="Background" Value="{StaticResource GoldDarkBrush}"/>
+        <Setter Property="Foreground" Value="#1A1A2E"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource GoldBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Bouton danger -->
+    <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="Background" Value="{StaticResource DangerBrush}"/>
+    </Style>
+
+    <!-- TextBox sombre -->
+    <Style x:Key="DarkInput" TargetType="TextBox">
+        <Setter Property="Background"      Value="{StaticResource CardBgBrush}"/>
+        <Setter Property="Foreground"      Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush"     Value="{StaticResource PurpleBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding"         Value="10,8"/>
+        <Setter Property="FontSize"        Value="14"/>
+        <Setter Property="CaretBrush"      Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+
+    <!-- PasswordBox sombre -->
+    <Style x:Key="DarkPasswordBox" TargetType="PasswordBox">
+        <Setter Property="Background"      Value="{StaticResource CardBgBrush}"/>
+        <Setter Property="Foreground"      Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush"     Value="{StaticResource PurpleBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding"         Value="10,8"/>
+        <Setter Property="FontSize"        Value="14"/>
+    </Style>
+
+    <!-- Carte héros -->
+    <Style x:Key="HeroCard" TargetType="Border">
+        <Setter Property="Background"      Value="{StaticResource CardBgBrush}"/>
+        <Setter Property="BorderBrush"     Value="{StaticResource PurpleBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius"    Value="10"/>
+        <Setter Property="Padding"         Value="16"/>
+        <Setter Property="Margin"          Value="6"/>
+    </Style>
+
+    <!-- Barre HP joueur -->
+    <Style x:Key="PlayerHpBar" TargetType="ProgressBar">
+        <Setter Property="Height"          Value="22"/>
+        <Setter Property="Foreground"      Value="{StaticResource SuccessBrush}"/>
+        <Setter Property="Background"      Value="#1A1A2E"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="11">
+                        <Border x:Name="PART_Track">
+                            <Border x:Name="PART_Indicator"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="11"
+                                    HorizontalAlignment="Left"/>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Barre HP ennemi -->
+    <Style x:Key="EnemyHpBar" TargetType="ProgressBar" BasedOn="{StaticResource PlayerHpBar}">
+        <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+    </Style>
+
+    <!-- Textes -->
+    <Style x:Key="TitleText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource GoldBrush}"/>
+        <Setter Property="FontSize"   Value="24"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="BodyText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="FontSize"   Value="13"/>
+    </Style>
+
+    <Style x:Key="SubText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="FontSize"   Value="12"/>
+    </Style>
+
+    <!-- ListBox sombre -->
+    <Style x:Key="DarkListBox" TargetType="ListBox">
+        <Setter Property="Background"      Value="{StaticResource PanelBgBrush}"/>
+        <Setter Property="BorderBrush"     Value="{StaticResource PurpleBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground"      Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+
+    <Style x:Key="DarkListBoxItem" TargetType="ListBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="Padding"    Value="10,8"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource PurpleDarkBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#2A2A4E"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

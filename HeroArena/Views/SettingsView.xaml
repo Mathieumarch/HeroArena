@@ -1,0 +1,55 @@
+<Window x:Class="HeroArena.Views.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Paramètres — Base de données"
+        Height="340" Width="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource DarkBgBrush}">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Paramètres de connexion"
+                   Style="{StaticResource TitleText}"
+                   Margin="0,0,0,20"/>
+
+        <TextBlock Grid.Row="1" Text="Chaîne de connexion SQL Server"
+                   Style="{StaticResource BodyText}"
+                   Margin="0,0,0,6"/>
+
+        <TextBox Grid.Row="2"
+                 Style="{StaticResource DarkInput}"
+                 Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="False"
+                 Margin="0,0,0,16"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,16">
+            <Button Content="Sauvegarder"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding SaveCommand}"
+                    Margin="0,0,10,0"/>
+            <Button Content="Tester la connexion"
+                    Style="{StaticResource SpellButton}"
+                    Command="{Binding TestCommand}"
+                    Margin="0,0,10,0"/>
+            <Button Content="Initialiser les données"
+                    Style="{StaticResource DangerButton}"
+                    Command="{Binding SeedCommand}"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="4"
+                   Text="{Binding StatusMessage}"
+                   Foreground="{StaticResource GoldBrush}"
+                   FontSize="13"
+                   TextWrapping="Wrap"/>
+    </Grid>
+</Window>

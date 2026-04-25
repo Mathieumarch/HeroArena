@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="HeroArena.Views.CombatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource DarkBgBrush}">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Titre + Score + Timer -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="ARÈNE DE COMBAT"
+                       Style="{StaticResource TitleText}"
+                       HorizontalAlignment="Left"/>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Style="{StaticResource BodyText}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0">
+                    <Run Text="Score : " Foreground="{StaticResource GoldBrush}"/>
+                    <Run Text="{Binding Score}" FontWeight="Bold"
+                         Foreground="{StaticResource GoldBrush}"/>
+                </TextBlock>
+                <Border Background="{StaticResource CardBgBrush}"
+                        CornerRadius="8" Padding="12,6">
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <Run Text="Temps : "/>
+                        <Run Text="{Binding TimeLeft}"
+                             Foreground="{StaticResource DangerBrush}"
+                             FontWeight="Bold"/>
+                        <Run Text="s"/>
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Barres de vie -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Style="{StaticResource BodyText}"
+                           FontWeight="Bold" Margin="0,0,0,4">
+                    <Run Text="{Binding PlayerHero.Name, FallbackValue='Joueur'}"/>
+                    <Run Text=" — "/>
+                    <Run Text="{Binding PlayerHp}"
+                         Foreground="{StaticResource SuccessBrush}"/>
+                    <Run Text=" / "/>
+                    <Run Text="{Binding PlayerMaxHp}"/>
+                    <Run Text=" PV"/>
+                </TextBlock>
+                <ProgressBar Style="{StaticResource PlayerHpBar}"
+                             Value="{Binding PlayerHpPercent, Mode=OneWay}"
+                             Maximum="100"/>
+            </StackPanel>
+
+            <TextBlock Grid.Column="1" Text="VS"
+                       Style="{StaticResource TitleText}"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="2">
+                <TextBlock Style="{StaticResource BodyText}"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,0,4">
+                    <Run Text="Ennemi"/>
+                    <Run Text=" — "/>
+                    <Run Text="{Binding EnemyHp}"
+                         Foreground="{StaticResource DangerBrush}"/>
+                    <Run Text=" / "/>
+                    <Run Text="{Binding EnemyMaxHp}"/>
+                    <Run Text=" PV"/>
+                </TextBlock>
+                <ProgressBar Style="{StaticResource EnemyHpBar}"
+                             Value="{Binding EnemyHpPercent, Mode=OneWay}"
+                             Maximum="100"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Statut -->
+        <Border Grid.Row="2"
+                Background="{StaticResource CardBgBrush}"
+                CornerRadius="8" Padding="16,10" Margin="0,0,0,16">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Style="{StaticResource BodyText}"
+                       HorizontalAlignment="Center"
+                       FontSize="15"/>
+        </Border>
+
+        <!-- Sorts -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Choisissez votre sort :"
+                       Style="{StaticResource BodyText}"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource GoldBrush}"
+                       Margin="0,0,0,12"/>
+
+            <ItemsControl Grid.Row="1"
+                          ItemsSource="{Binding PlayerHero.Spells}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" Rows="2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource SpellButton}"
+                                Command="{Binding DataContext.UseSpellCommand,
+                                    RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                Margin="6">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}"
+                                           FontWeight="Bold" FontSize="14"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock HorizontalAlignment="Center"
+                                           FontSize="12" Margin="0,4,0,0">
+                                    <Run Text="Dégâts : "/>
+                                    <Run Text="{Binding Damage}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Description}"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,4,0,0"
+                                           Opacity="0.8"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <!-- Log + Nouveau combat -->
+        <Grid Grid.Row="4" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Grid.Column="0"
+                     Style="{StaticResource DarkListBox}"
+                     ItemsSource="{Binding CombatLog}"
+                     Height="120"
+                     FontSize="12"
+                     Foreground="{StaticResource TextPrimaryBrush}"/>
+
+            <Button Grid.Column="1"
+                    Content="Nouveau combat"
+                    Style="{StaticResource DangerButton}"
+                    Command="{Binding NewCombatCommand}"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Stretch"/>
+        </Grid>
+    </Grid>
+</UserControl>

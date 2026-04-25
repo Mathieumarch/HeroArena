@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="HeroArena.Views.HeroesTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource DarkBgBrush}">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Liste des héros -->
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Héros disponibles"
+                       Style="{StaticResource TitleText}"
+                       FontSize="16" Margin="0,0,0,12"/>
+
+            <ListBox x:Name="HeroList"
+                     Style="{StaticResource DarkListBox}"
+                     ItemContainerStyle="{StaticResource DarkListBoxItem}"
+                     ItemsSource="{Binding Heroes}"
+                     SelectedItem="{Binding SelectedHero}"
+                     DisplayMemberPath="Name"
+                     Height="400"/>
+
+            <Button Content="Choisir ce héros"
+                    Style="{StaticResource SpellButton}"
+                    Command="{Binding ChooseHeroCommand}"
+                    Margin="0,12,0,0"/>
+        </StackPanel>
+
+        <!-- Détail du héros -->
+        <Border Grid.Column="1" Style="{StaticResource HeroCard}" Margin="20,0,0,0">
+            <StackPanel DataContext="{Binding SelectedHero}">
+                <TextBlock Text="{Binding Name, FallbackValue='Sélectionnez un héros'}"
+                           Style="{StaticResource TitleText}"
+                           Margin="0,0,0,8"/>
+
+                <TextBlock Style="{StaticResource BodyText}" Margin="0,0,0,4">
+                    <Run Text="PV : " FontWeight="Bold"
+                         Foreground="{StaticResource GoldBrush}"/>
+                    <Run Text="{Binding Health}"/>
+                </TextBlock>
+
+                <TextBlock Text="Sorts :"
+                           Style="{StaticResource BodyText}"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource GoldBrush}"
+                           Margin="0,16,0,8"/>
+
+                <ItemsControl ItemsSource="{Binding Spells}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource HeroCard}"
+                                    BorderBrush="{StaticResource GoldDarkBrush}"
+                                    Margin="0,0,0,8">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"
+                                               Style="{StaticResource BodyText}"
+                                               FontWeight="SemiBold"/>
+                                    <TextBlock Style="{StaticResource SubText}"
+                                               Margin="0,2,0,0">
+                                        <Run Text="Dégâts : "/>
+                                        <Run Text="{Binding Damage}"
+                                             Foreground="{StaticResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Description}"
+                                               Style="{StaticResource SubText}"
+                                               TextWrapping="Wrap"
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
